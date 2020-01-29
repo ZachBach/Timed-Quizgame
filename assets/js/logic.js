@@ -12,7 +12,7 @@ var feedBack = document.getElementById("feedback");
 
 function startQuiz() {
   var startScreenEl = document.getElementById("start-screen");
-  startScreenEl.setAttribute("class", "hide");  
+  startScreenEl.setAttribute("class", "hide");
   questionsEl.removeAttribute("class");
   timerId = setInterval(clockCountdown, 1000);
   timerEl.textContent = time;
@@ -23,7 +23,7 @@ function getQuestion() {
   var titleEl = document.getElementById("question-title");
   titleEl.textContent = currentQuestion.title;
   choicesEl.innerHTML = "";
-  
+
   currentQuestion.choices.forEach(function(choice, i) {
     var userChoice = document.createElement("button");
     userChoice.setAttribute("class", "choice");
@@ -31,6 +31,8 @@ function getQuestion() {
     userChoice.textContent = i + 1 + ". " + choice;
     userChoice.onclick = questionClick;
     choicesEl.appendChild(userChoice);
+    choicesEl.setAttribute("style", "text-align: center;");
+    startButton.setAttribute("style", "text-align: center;");
   });
 }
 function questionClick() {
@@ -41,20 +43,16 @@ function questionClick() {
     }
 
     timerEl.textContent = time;
-  
+
     feedBack.textContent = "So close my lord!";
   } else {
-  
     feedBack.textContent = "You got it right!";
   }
-  
 
   feedBack.setAttribute("class", "feedback");
   setTimeout(function() {
     feedBack.setAttribute("class", "feedback hide");
   }, 1000);
-
-
 
   currentQuestionIndex++;
   if (currentQuestionIndex === questions.length) {
@@ -79,6 +77,24 @@ function clockCountdown() {
   }
 }
 
+function saveScores() {
+  let arr = JSON.parse(localStorage.getItem("game"));
+  var finalList;
+  if (!Array.isArray(arr)) {
+    finalList = [];
+  } else {
 
+    finalList = arr;
+  }
+
+  var initialsEl = initials.value;
+  var finalScoreEl = document.getElementById("final-score").textContent;
+  let final = { name: initialsEl, score: finalScoreEl };
+  finalList.push(final);
+  localStorage.setItem("game", JSON.stringify(finalList));
+
+  location.href = "highscores.html";
+}
+
+submitButton.onclick = saveScores;
 startButton.onclick = startQuiz;
-

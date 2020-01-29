@@ -1,9 +1,9 @@
-// create array of objects 
+
 var questions = [ 
     {
       title: "What is Joffrey Baratheons sword called?",
       choices: ["Widow's cry", "Widow's wail", "Widow's demise", "Widow's fall"],
-      answer: "Jamie"
+      answer: "Widow's wail"
     },
     {
       title: "What is Jon Snows Wolf named?",
